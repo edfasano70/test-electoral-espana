@@ -1,10 +1,12 @@
-const CACHE_NAME = 'electoral-test-v9';
+const CACHE_NAME = 'electoral-test-v10';
 const APP_SHELL = [
   './',
   './index.html',
   './manifest.json',
+  './elecciones.png',
   './icon-192.png',
   './icon-512.png',
+  './icon-maskable-512.png',
   './pp.png',
   './psoe.png',
   './vox.png',

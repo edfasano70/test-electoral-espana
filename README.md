@@ -15,7 +15,7 @@ Aplicación web tipo PWA para descubrir tu afinidad política mediante un **test
 - Lista detallada de propuestas con filtros por respuesta y por partido.
 - Copiar y compartir el resultado.
 - Progreso persistente en `localStorage`.
-- PWA instalable y funcionamiento offline mediante service worker.
+- PWA instalable con icono propio e identidad visual 29N, y funcionamiento offline mediante service worker.
 - Valoración global de la app (1–5 estrellas) y contador global de encuestas realizadas.
 
 ## Cómo se calcula la afinidad
@@ -44,9 +44,11 @@ No hay build, gestor de paquetes ni tests automatizados.
 .
 ├── index.html                 # UI, estilos, lógica y dataset de propuestas
 ├── manifest.json              # Manifest PWA
-├── sw.js                      # Service worker (caché v9)
+├── sw.js                      # Service worker (caché v10)
+├── elecciones.png             # Logo/icono fuente (512×512)
 ├── icon-192.png
 ├── icon-512.png
+├── icon-maskable-512.png
 ├── pp.png
 ├── psoe.png
 ├── vox.png
