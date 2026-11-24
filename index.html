@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-900 text-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Electoral España 2026: 100 Propuestas</title>
+  <meta name="theme-color" content="#0f172a">
+  <meta name="description" content="Test ciego de 100 propuestas políticas de España para evaluar tu afinidad electoral sin sesgos con PP, PSOE, VOX y Frente Amplio.">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            pp: { DEFAULT: '#0056A3', light: '#2563eb', dark: '#1e40af' },
+            psoe: { DEFAULT: '#E30613', light: '#ef4444', dark: '#b91c1c' },
+            vox: { DEFAULT: '#63BE21', light: '#22c55e', dark: '#15803d' },
+            fa: { DEFAULT: '#F59E0B', light: '#fbbf24', dark: '#d97706' }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .glass-card {
+      background: rgba(30, 41, 59, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(100, 116, 139, 0.5); border-radius: 4px; }
+    @keyframes pulse-subtle { 0%, 100% { opacity: 1; } 50% { opacity: 0.85; } }
+    .animate-pulse-subtle { animation: pulse-subtle 2s infinite ease-in-out; }
+  </style>
+</head>
+<body class="h-full flex flex-col min-h-screen bg-slate-950 text-slate-100 overflow-x-hidden selection:bg-indigo-500 selection:text-white">
+
+  <!-- Header Navigation -->
+  <header class="w-full glass-card sticky top-0 z-40 border-b border-slate-800/80 px-4 py-3 shadow-lg">
+    <div class="max-w-5xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="app.showScreen('welcome')">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center shadow-md shadow-indigo-500/20 font-black text-xl text-white">
+          🗳️
+        </div>
+        <div>
+          <h1 class="font-bold text-base md:text-lg leading-tight text-white tracking-wide">Test Electoral 2026</h1>
+          <p class="text-xs text-slate-400 font-medium">100 Propuestas • Test Ciego</p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-2">
+        <!-- PWA Install Button -->
+        <button id="pwa-install-btn" class="hidden text-xs bg-emerald-600 hover:bg-emerald-500 text-white font-semibold py-1.5 px-3 rounded-lg shadow transition flex items-center space-x-1.5">
+          <svg aria-hidden="true" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+          <span>Instalar App</span>
+        </button>
+        <button id="reset-top-btn" class="hidden text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium py-1.5 px-3 rounded-lg border border-slate-700 transition" onclick="app.resetTest()">
+          Reiniciar
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Notification Toast Container -->
+  <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none"></div>
+
+  <!-- Main Container -->
+  <main class="flex-1 max-w-5xl w-full mx-auto p-4 md:p-6 flex flex-col justify-center">
+
+    <!-- SCREEN 1: WELCOME / CONFIGURATION -->
+    <section id="screen-welcome" class="space-y-6 max-w-2xl mx-auto w-full py-4">
+      <div class="glass-card rounded-2xl p-6 md:p-8 text-center space-y-6 shadow-2xl relative overflow-hidden">
+        <div class="absolute -right-16 -top-16 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -left-16 -bottom-16 w-40 h-40 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="inline-flex items-center space-x-2 bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 px-3 py-1 rounded-full text-xs font-semibold">
+          <span>⚖️ Sin sesgos de marca o ideología</span>
+        </div>
+
+        <div class="space-y-2">
+          <h2 class="text-2xl md:text-4xl font-extrabold text-white tracking-tight">
+            Descubre tu Verdadera Afinidad Electoral
+          </h2>
+          <p class="text-sm md:text-base text-slate-300 leading-relaxed max-w-xl mx-auto">
+            Evalúa <strong class="text-white">100 propuestas reales</strong> de los programas políticos en España (25 de cada partido). Responderás a cada medida sin saber a qué partido pertenece: <strong class="text-pp-light">PP</strong>, <strong class="text-psoe-light">PSOE</strong>, <strong class="text-vox-light">VOX</strong> o <strong class="text-fa-light">Frente Amplio (SUMAR)</strong>.
+          </p>
+        </div>
+
+        <!-- Mode Selectors -->
+        <div class="bg-slate-900/80 rounded-xl p-4 border border-slate-800 text-left space-y-4">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Configuración de la prueba</h3>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <label class="relative flex flex-col p-3.5 bg-slate-800/60 hover:bg-slate-800 border border-slate-700 rounded-xl cursor-pointer transition select-none">
+              <input type="radio" name="quiz-mode" value="full" checked class="sr-only peer">
+              <span class="pointer-events-none absolute inset-0 rounded-xl ring-2 ring-indigo-400 opacity-0 peer-focus-visible:opacity-100 transition" aria-hidden="true"></span>
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-sm text-white peer-checked:text-indigo-400">Test Completo</span>
+                <span class="text-xs bg-indigo-900/60 text-indigo-300 font-semibold px-2 py-0.5 rounded">100 preguntas</span>
+              </div>
+              <span class="text-xs text-slate-400">Recomendado. Evaluación exhaustiva de 25 propuestas por partido.</span>
+              <div class="absolute inset-0 border-2 border-indigo-500 rounded-xl opacity-0 peer-checked:opacity-100 pointer-events-none transition"></div>
+            </label>
+
+            <label class="relative flex flex-col p-3.5 bg-slate-800/60 hover:bg-slate-800 border border-slate-700 rounded-xl cursor-pointer transition select-none">
+              <input type="radio" name="quiz-mode" value="quick" class="sr-only peer">
+              <span class="pointer-events-none absolute inset-0 rounded-xl ring-2 ring-indigo-400 opacity-0 peer-focus-visible:opacity-100 transition" aria-hidden="true"></span>
+              <div class="flex items-center justify-between mb-1">
+                <span class="font-bold text-sm text-white">Modo Rápido</span>
+                <span class="text-xs bg-emerald-900/60 text-emerald-300 font-semibold px-2 py-0.5 rounded">20 preguntas</span>
+              </div>
+              <span class="text-xs text-slate-400">Muestra aleatoria equilibrada (5 propuestas representativas por partido).</span>
+              <div class="absolute inset-0 border-2 border-indigo-500 rounded-xl opacity-0 peer-checked:opacity-100 pointer-events-none transition"></div>
+            </label>
+          </div>
+
+          <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-300">
+            <label class="flex items-center space-x-2 cursor-pointer">
+              <input type="checkbox" id="shuffle-toggle" checked class="rounded border-slate-700 text-indigo-600 focus:ring-indigo-500 bg-slate-800 w-4 h-4">
+              <span>Mezclar orden de las propuestas</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="space-y-3 pt-2">
+          <button id="resume-btn" class="hidden w-full py-3.5 px-6 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold shadow-lg shadow-amber-600/25 transition transform active:scale-98 flex items-center justify-center space-x-2" onclick="app.resumeTest()">
+            <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span>Continuar test en curso (<span id="resume-count">0</span>/100)</span>
+          </button>
+
+          <button class="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-extrabold text-base md:text-lg shadow-xl shadow-indigo-600/30 transition transform active:scale-98 flex items-center justify-center space-x-2" onclick="app.startNewTest()">
+            <span>Comenzar Test Ciego</span>
+            <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+          </button>
+        </div>
+
+        <!-- Party badges preview footer -->
+        <div class="pt-4 border-t border-slate-800/60 flex flex-wrap items-center justify-center gap-3 text-xs font-semibold text-slate-400">
+          <span>Involucra 100 propuestas de:</span>
+          <span class="inline-flex items-center space-x-1.5 bg-blue-950/80 border border-blue-800/60 text-blue-300 px-2 py-0.5 rounded-full"><img src="./pp.png" alt="" width="20" height="20" loading="lazy" class="w-5 h-5 rounded object-cover"><span>PP (25)</span></span>
+          <span class="inline-flex items-center space-x-1.5 bg-red-950/80 border border-red-800/60 text-red-300 px-2 py-0.5 rounded-full"><img src="./psoe.png" alt="" width="20" height="20" loading="lazy" class="w-5 h-5 rounded object-cover"><span>PSOE (25)</span></span>
+          <span class="inline-flex items-center space-x-1.5 bg-emerald-950/80 border border-emerald-800/60 text-emerald-300 px-2 py-0.5 rounded-full"><img src="./vox.png" alt="" width="20" height="20" loading="lazy" class="w-5 h-5 rounded object-cover"><span>VOX (25)</span></span>
+          <span class="inline-flex items-center space-x-1.5 bg-amber-950/80 border border-amber-800/60 text-amber-300 px-2 py-0.5 rounded-full"><img src="./frenteamplio.png" alt="" width="20" height="20" loading="lazy" class="w-5 h-5 rounded object-cover"><span>Frente Amplio (25)</span></span>
+        </div>
+
+        <!-- Global survey counter -->
+        <div class="pt-3 flex items-center justify-center">
+          <span class="inline-flex items-center gap-2 bg-indigo-950/60 border border-indigo-800/60 text-indigo-300 px-3 py-1 rounded-full text-xs font-semibold" aria-live="polite">
+            <svg aria-hidden="true" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            <span>Encuestas realizadas: <span data-survey-count>—</span></span>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: BLIND QUIZ INTERFACE -->
+    <section id="screen-quiz" class="hidden max-w-3xl mx-auto w-full space-y-5">
+      <!-- Progress Bar Card -->
+      <div class="glass-card rounded-2xl p-4 space-y-2 shadow-lg">
+        <div class="flex items-center justify-between text-xs font-bold text-slate-400">
+          <span id="quiz-counter-text" class="text-indigo-400">Propuesta 1 de 100</span>
+          <span id="quiz-category-badge" class="bg-slate-800 text-slate-300 border border-slate-700 px-2.5 py-0.5 rounded-full text-[11px] font-semibold">
+            Categoría
+          </span>
+          <span id="quiz-percent-text" class="text-slate-300">1%</span>
+        </div>
+        <div class="w-full h-3 bg-slate-900 rounded-full overflow-hidden p-0.5 border border-slate-800">
+          <div id="quiz-progress-fill" class="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full transition-all duration-300 w-0"></div>
+        </div>
+      </div>
+
+      <!-- Question Box -->
+      <div class="glass-card rounded-2xl p-6 md:p-8 space-y-6 shadow-2xl relative min-h-[260px] flex flex-col justify-between">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between text-xs text-slate-400">
+            <span class="inline-flex items-center space-x-1 bg-slate-800/80 px-2.5 py-1 rounded-md text-slate-300 font-mono">
+              <span class="text-indigo-400">#</span><span id="quiz-prop-id">001</span>
+            </span>
+            <span class="text-slate-400 font-medium italic">¿Estás de acuerdo con esta propuesta?</span>
+          </div>
+
+          <p id="quiz-question-text" aria-live="polite" class="text-lg md:text-2xl font-bold text-white leading-relaxed tracking-wide min-h-[90px] flex items-center">
+            Cargando propuesta...
+          </p>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-slate-800/80">
+          <button class="group py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-base shadow-lg shadow-emerald-600/20 transition transform active:scale-95 flex flex-col items-center justify-center space-y-1" id="btn-agree" aria-pressed="false" onclick="app.answer('agree')">
+            <div class="flex items-center space-x-2">
+              <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+              <span>De acuerdo</span>
+            </div>
+          </button>
+
+          <button class="group py-3.5 px-4 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-base shadow-lg shadow-rose-600/20 transition transform active:scale-95 flex flex-col items-center justify-center space-y-1" id="btn-disagree" aria-pressed="false" onclick="app.answer('disagree')">
+            <div class="flex items-center space-x-2">
+              <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"/></svg>
+              <span>En desacuerdo</span>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Navigation Bar -->
+      <div class="flex items-center justify-between text-xs text-slate-400 px-2">
+        <button id="prev-btn" class="flex items-center space-x-1.5 bg-slate-800/80 hover:bg-slate-700 text-slate-300 px-3 py-2 rounded-lg transition disabled:opacity-40 disabled:cursor-not-allowed" onclick="app.previousQuestion()">
+          <svg aria-hidden="true" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span>Anterior</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- SCREEN 3: RESULTS DASHBOARD -->
+    <section id="screen-results" class="hidden space-y-8 max-w-4xl mx-auto w-full py-4">
+      
+      <!-- Top Affinity Podium Card -->
+      <div class="glass-card rounded-2xl p-6 md:p-8 space-y-6 shadow-2xl relative overflow-hidden">
+        <div class="text-center space-y-2">
+          <div class="inline-flex items-center space-x-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-3 py-1 rounded-full text-xs font-bold">
+            🏆 Resultado de tu Test Electoral
+          </div>
+          <h2 class="text-2xl md:text-4xl font-extrabold text-white">Tu Afinidad Política Principal</h2>
+          <p class="text-xs md:text-sm text-slate-400">Basado en tus respuestas a las propuestas evaluadas sin conocer su partido origen.</p>
+        </div>
+
+        <!-- Winning Party Highlight Banner -->
+        <div id="results-winner-banner" class="p-5 rounded-2xl bg-slate-900 border border-slate-700 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl">
+          <!-- Dynamically populated -->
+        </div>
+
+        <p class="text-center text-xs text-slate-400">
+          Encuestas realizadas en total: <span data-survey-count class="font-bold text-indigo-300">—</span>
+        </p>
+
+        <!-- Party Comparison Bars Grid -->
+        <div class="space-y-4 pt-2">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400">Desglose por partido político</h3>
+          <div id="party-scores-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Dynamically populated party cards -->
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4 border-t border-slate-800">
+          <button class="w-full sm:w-auto py-3 px-6 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm shadow-lg transition flex items-center justify-center space-x-2" onclick="app.shareResults()">
+            <svg aria-hidden="true" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 100-2.684 3 3 0 000 2.684m0 9.316a3 3 0 100-2.684 3 3 0 000 2.684"/></svg>
+            <span>Copiar / Compartir Resultado</span>
+          </button>
+          
+          <button class="w-full sm:w-auto py-3 px-6 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-sm border border-slate-700 transition flex items-center justify-center space-x-2" onclick="app.resetTest()">
+            <svg aria-hidden="true" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            <span>Repetir el Test</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- DETAILED BREAKDOWN TABLE / REVEAL SECTION -->
+      <div class="glass-card rounded-2xl p-6 md:p-8 space-y-6 shadow-2xl">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h3 class="text-xl font-bold text-white">Desglose Detallado de Propuestas</h3>
+            <p class="text-xs text-slate-400">Descubre ahora el partido de cada una de las medidas y cómo respondiste.</p>
+          </div>
+
+          <!-- Filters -->
+          <div class="flex flex-wrap items-center gap-2 text-xs">
+            <!-- Filter by Answer -->
+            <select id="filter-answer" class="bg-slate-900 border border-slate-700 text-slate-200 rounded-lg px-3 py-1.5 font-medium focus:ring-indigo-500 focus:border-indigo-500" onchange="app.renderDetailedList()">
+              <option value="all">Todas las respuestas</option>
+              <option value="agree">Solo 'De acuerdo'</option>
+              <option value="disagree">Solo 'En desacuerdo'</option>
+              <option value="skip">Solo 'Saltadas'</option>
+            </select>
+
+            <!-- Filter by Party -->
+            <select id="filter-party" class="bg-slate-900 border border-slate-700 text-slate-200 rounded-lg px-3 py-1.5 font-medium focus:ring-indigo-500 focus:border-indigo-500" onchange="app.renderDetailedList()">
+              <option value="all">Todos los partidos</option>
+              <option value="PP">PP (Partido Popular)</option>
+              <option value="PSOE">PSOE</option>
+              <option value="VOX">VOX</option>
+              <option value="FA">Frente Amplio (SUMAR)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Proposals List Container -->
+        <div id="detailed-proposals-list" class="space-y-3 max-h-[600px] overflow-y-auto custom-scrollbar pr-1">
+          <!-- Dynamically populated detailed rows -->
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full border-t border-slate-800/80 py-6 px-4 text-center text-xs text-slate-400 space-y-4">
+    <!-- Valoración de la aplicación -->
+    <div class="max-w-2xl mx-auto rounded-xl border border-slate-800 bg-slate-900/70 p-4">
+      <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Valora esta aplicación</p>
+      <div id="rating-stars" class="mt-2 flex items-center justify-center gap-1.5" role="group" aria-label="Valoración de 1 a 5 estrellas">
+        <button type="button" data-rating="1" class="rating-star text-2xl leading-none transition-colors text-slate-600 hover:text-amber-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 rounded" aria-label="1 estrella" aria-pressed="false">★</button>
+        <button type="button" data-rating="2" class="rating-star text-2xl leading-none transition-colors text-slate-600 hover:text-amber-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 rounded" aria-label="2 estrellas" aria-pressed="false">★</button>
+        <button type="button" data-rating="3" class="rating-star text-2xl leading-none transition-colors text-slate-600 hover:text-amber-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 rounded" aria-label="3 estrellas" aria-pressed="false">★</button>
+        <button type="button" data-rating="4" class="rating-star text-2xl leading-none transition-colors text-slate-600 hover:text-amber-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 rounded" aria-label="4 estrellas" aria-pressed="false">★</button>
+        <button type="button" data-rating="5" class="rating-star text-2xl leading-none transition-colors text-slate-600 hover:text-amber-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 rounded" aria-label="5 estrellas" aria-pressed="false">★</button>
+      </div>
+      <p id="rating-status" class="mt-2 text-xs text-slate-400" aria-live="polite">Cargando estadísticas…</p>
+    </div>
+
+    <!-- Créditos y agradecimiento -->
+    <div class="max-w-2xl mx-auto flex flex-col sm:flex-row items-center gap-4 rounded-xl border border-slate-800 bg-slate-900/70 p-4 text-left">
+      <a href="https://www.youtube.com/watch?v=aDCWZx1v0zg" target="_blank" rel="noopener noreferrer"
+         class="group relative block shrink-0 overflow-hidden rounded-lg border border-slate-700">
+        <img src="./assets/video-thumbnail.jpg"
+             alt="Miniatura del vídeo «Test elecciones 2026 - 100 propuestas para ESPAÑA»"
+             width="160" height="90" loading="lazy"
+             class="w-40 h-[90px] object-cover transition duration-300 group-hover:scale-105">
+        <span class="absolute inset-0 flex items-center justify-center bg-slate-950/30 transition group-hover:bg-slate-950/10">
+          <svg aria-hidden="true" class="w-9 h-9 text-white drop-shadow" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7z"/>
+          </svg>
+        </span>
+      </a>
+      <div class="space-y-1">
+        <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Créditos y agradecimiento</p>
+        <p class="text-sm font-semibold text-slate-200">
+          Inspirado en el vídeo de
+          <a href="https://www.youtube.com/@NOTICIASILUSTRADAS" target="_blank" rel="noopener noreferrer"
+             class="text-indigo-400 hover:text-indigo-300 underline underline-offset-2">NOTICIAS ILUSTRADAS</a>
+        </p>
+        <p class="text-xs text-slate-400">«Test elecciones 2026 - 100 propuestas para ESPAÑA»</p>
+        <p class="text-[11px] text-slate-500">Gracias por la idea y por difundir el test.</p>
+      </div>
+    </div>
+    <div class="space-y-1">
+      <p class="text-xs text-slate-300">
+        Idea y programación:
+        <a href="https://github.com/edfasano70" target="_blank" rel="noopener noreferrer"
+           class="text-indigo-400 hover:text-indigo-300 underline underline-offset-2 font-semibold">@EdFasano70</a>
+      </p>
+      <p>Test Electoral España 2026 • 100 Propuestas Extraídas de Programas Oficiales</p>
+      <p class="text-[11px] text-slate-400">Aplicación PWA Autocontenida • Uso Informativo y Pedagógico</p>
+    </div>
+  </footer>
+
+  <!-- DATA & APP SCRIPT -->
+  <script>
+    // --- PARTIES DATA ---
+    const PARTIES = {
+      PP: { code: 'PP', name: 'Partido Popular', color: '#0056A3', bgClass: 'bg-pp', borderClass: 'border-pp', textClass: 'text-pp-light', logo: './pp.png' },
+      PSOE: { code: 'PSOE', name: 'PSOE', color: '#E30613', bgClass: 'bg-psoe', borderClass: 'border-psoe', textClass: 'text-psoe-light', logo: './psoe.png' },
+      VOX: { code: 'VOX', name: 'VOX', color: '#63BE21', bgClass: 'bg-vox', borderClass: 'border-vox', textClass: 'text-vox-light', logo: './vox.png' },
+      FA: { code: 'FA', name: 'Frente Amplio / SUMAR', color: '#F59E0B', bgClass: 'bg-fa', borderClass: 'border-fa', textClass: 'text-fa-light', logo: './frenteamplio.png' }
+    };
+
+    // --- 100 PROPOSALS DATASET ---
+    const RAW_PROPOSALS = [
+      { id: 1, party: 'PP', category: 'Economía y Trabajo', text: 'Subir las pensiones cada año con el IPC para no perder poder de compra, también las de los jóvenes cuando se jubilen.' },
+      { id: 2, party: 'PSOE', category: 'Derechos y Sociedad', text: 'Aprobar una ley para abolir la prostitución y el proxenetismo en todas sus formas, tratando a las personas prostituidas como víctimas.' },
+      { id: 3, party: 'PP', category: 'Vivienda y Alquiler', text: 'Derogar la Ley de Vivienda, eliminando las zonas tensionadas y sin limitar el precio del alquiler.' },
+      { id: 4, party: 'PP', category: 'Vivienda y Alquiler', text: 'Avalar desde el Estado hasta el 20% del precio del piso a compradores menores de 40 años (ampliable hasta 50) para no necesitar entrada ahorrada.' },
+      { id: 5, party: 'FA', category: 'Estado e Instituciones', text: 'Dar a las comunidades autónomas al menos un 2,3% más del PIB cada año y perdonarles parte de la deuda si no bajan impuestos a los ricos.' },
+      { id: 6, party: 'PP', category: 'Vivienda y Alquiler', text: 'Bajar el IVA de la primera vivienda del 10% al 4% para menores de 40 años, pudiendo pagarlo poco a poco al ritmo de la hipoteca.' },
+      { id: 7, party: 'PSOE', category: 'Fiscalidad e Impuestos', text: 'Subir los impuestos a las rentas del ahorro e inversiones hasta un 35% para quienes ganen más de 300.000 € al año.' },
+      { id: 8, party: 'PP', category: 'Fiscalidad e Impuestos', text: 'Eximir del pago de IRPF a quienes cobren el salario mínimo, subiendo ese límite automáticamente cada vez que suba el SMI.' },
+      { id: 9, party: 'PP', category: 'Inmigración y Seguridad', text: 'Implantar visados por puntos para inmigrantes según formación, experiencia e idioma, y cupos anuales solo para países que acepten devoluciones de irregulares.' },
+      { id: 10, party: 'FA', category: 'Derechos y Tecnología', text: 'Prohibir los chatbots de IA que simulen relaciones sentimentales o enganchen al usuario, obligándoles a recordar continuamente que no son humanos.' },
+      { id: 11, party: 'FA', category: 'Inmigración y Seguridad', text: 'Crear una vía estable y permanente para regularizar a los inmigrantes sin papeles y acabar con las devoluciones en caliente.' },
+      { id: 12, party: 'VOX', category: 'Derechos y Familia', text: 'Extender las ventajas de las familias numerosas a todas las familias desde el primer hijo y hacer realmente gratuita la guardería de 0 a 3 años.' },
+      { id: 13, party: 'PP', category: 'Economía y Autónomos', text: 'Eximir de cuota a los nuevos autónomos el primer año (y el segundo si ganan menos del SMI) y proteger su vivienda habitual si el negocio fracasa.' },
+      { id: 14, party: 'FA', category: 'Economía y Trabajo', text: 'Obligar por ley a las empresas de 50 o más trabajadores a repartir el 10% de sus beneficios entre la plantilla, y que la mitad del consejo en empresas de más de 1.000 empleados sea de trabajadores.' },
+      { id: 15, party: 'VOX', category: 'Economía y Trabajo', text: 'Derogar la reforma laboral actual por maquillar la temporalidad y favorecer a los sindicatos.' },
+      { id: 16, party: 'PSOE', category: 'Estado e Instituciones', text: 'Establecer un mandato de 5 años para el Fiscal General del Estado, separado del del Gobierno y sin recibir órdenes sobre casos concretos.' },
+      { id: 17, party: 'FA', category: 'Fiscalidad e Impuestos', text: 'Eximir de IRPF a quien cobre el salario mínimo, pero subir el tipo hasta el 52% para quienes ganen más de 300.000 € al año.' },
+      { id: 18, party: 'PP', category: 'Educación y Familia', text: 'Hacer gratuita la guardería de 0 a 3 años financiando el Estado la mitad de cada plaza y las comunidades autónomas la otra mitad.' },
+      { id: 19, party: 'FA', category: 'Vivienda y Alquiler', text: 'Prohibir que fondos, bancos e inmobiliarias compren viviendas; solo se podrán adquirir para vivir en ellas o alquilarlas a precio asequible regulado.' },
+      { id: 20, party: 'PP', category: 'Vivienda y Alquiler', text: 'Construir un millón de viviendas más en suelo público y privado, resolviendo las licencias de obra en un máximo de 3 meses.' },
+      { id: 21, party: 'FA', category: 'Fiscalidad e Impuestos', text: 'Limitar las herencias a un máximo de 10 millones de euros por persona, pasando todo lo que exceda esa cifra a Hacienda como impuesto.' },
+      { id: 22, party: 'PP', category: 'Sanidad y Salud', text: 'Establecer por ley una desgravación en la declaración de la renta para las personas celíacas.' },
+      { id: 23, party: 'PSOE', category: 'Estado e Instituciones', text: 'Crear un escaño ciudadano sin voto en el Congreso y en el Senado desde el que la sociedad civil pueda preguntar al Gobierno y presentar enmiendas.' },
+      { id: 24, party: 'VOX', category: 'Inmigración y Seguridad', text: 'Frenar la entrada de más inmigrantes, prohibir las regularizaciones masivas e impedir que quienes entren ilegalmente puedan regularizarse nunca.' },
+      { id: 25, party: 'VOX', category: 'Estado e Instituciones', text: 'Hacer que los propios jueces elijan por voto secreto a los 12 vocales judiciales del Consejo General del Poder Judicial, evitando el reparto entre partidos.' },
+      { id: 26, party: 'VOX', category: 'Sanidad y Salud', text: 'Excluir de la sanidad pública a los inmigrantes en situación ilegal, salvo en casos de urgencias graves.' },
+      { id: 27, party: 'PSOE', category: 'Derechos y Familia', text: 'Crear una prestación estatal universal por crianza para todos los hogares con hijos menores de edad.' },
+      { id: 28, party: 'PP', category: 'Cultura y Tradiciones', text: 'Recuperar el Premio Nacional de Tauromaquia como primer paso para proteger las fiestas y tradiciones populares.' },
+      { id: 29, party: 'PSOE', category: 'Justicia y Vivienda', text: 'Limitar a un máximo de 3 meses la duración de los juicios por despido y desahucio, y desalojar las viviendas ocupadas en 48 horas.' },
+      { id: 30, party: 'VOX', category: 'Educación y Lengua', text: 'Establecer un tope de alumnos de otras culturas o que no dominen el español por clase, con aulas aparte para nivelarlos sin ralentizar al resto.' },
+      { id: 31, party: 'FA', category: 'Economía y Trabajo', text: 'Reducir la jornada laboral a 37,5 horas semanales (35 en el sector público) e ir bajándola progresivamente hasta las 32 horas sin reducir el sueldo.' },
+      { id: 32, party: 'PP', category: 'Deporte y Estado', text: 'Exigir que la final del Mundial 2030 se juegue en España y plantear no participar en la competición si no se concede.' },
+      { id: 33, party: 'FA', category: 'Vivienda y Turismo', text: 'Eliminar en un máximo de 3 años todas las licencias de pisos turísticos en zonas tensionadas, aplicándoles un 21% de IVA y hasta un 150% de recargo en el IBI.' },
+      { id: 34, party: 'PP', category: 'Seguridad y Convivencia', text: 'Prohibir el burka y el niqab en espacios públicos y exigir aprender español y conocer la Constitución para renovar la residencia.' },
+      { id: 35, party: 'PSOE', category: 'Economía y Trabajo', text: 'Garantizar por ley que el salario mínimo interprofesional esté siempre por encima del 60% del sueldo medio.' },
+      { id: 36, party: 'PSOE', category: 'Vivienda y Alquiler', text: 'Congelar temporalmente los alquileres que superen el precio de referencia en zonas tensionadas y ampliar aún más la duración de los contratos.' },
+      { id: 37, party: 'PSOE', category: 'Vivienda y Fiscalidad', text: 'Crear un impuesto nuevo y progresivo para fondos buitre y grandes propietarios por cada piso vacío, turístico o alquilado a precio abusivo.' },
+      { id: 38, party: 'FA', category: 'Fiscalidad e Impuestos', text: 'Crear un impuesto anual del 3% a los ultrarricos con patrimonios superiores a 50 millones de euros, sin rebajas automáticas y exigible hasta 5 años después de irse de España.' },
+      { id: 39, party: 'PSOE', category: 'Sociedad y Redes', text: 'Implantar un medidor oficial del odio que publique periódicamente el nivel de odio y polarización existente en cada red social.' },
+      { id: 40, party: 'FA', category: 'Modelo de Estado', text: 'Avanzar hacia una República Federal y plurinacional con elección del jefe del Estado y referéndum para el derecho a decidir de los territorios.' },
+      { id: 41, party: 'FA', category: 'Energía y Medio Ambiente', text: 'Ofrecer 3 horas de luz gratis al día en las horas de mayor sol para todos los hogares mediante una eléctrica pública nueva y obligación a las grandes compañías.' },
+      { id: 42, party: 'VOX', category: 'Educación y Tradiciones', text: 'Eliminar los menús halal de los comedores escolares y suprimir el programa de lengua árabe y cultura marroquí.' },
+      { id: 43, party: 'VOX', category: 'Vivienda y Alquiler', text: 'Derogar la Ley de Vivienda y sustituirla por ventajas fiscales a quienes alquilen a largo plazo y deducciones para inquilinos españoles.' },
+      { id: 44, party: 'PP', category: 'Fiscalidad e Impuestos', text: 'Eximir de cobrar y declarar el IVA a los autónomos que facturen menos de 85.000 € al año, y reducir sus declaraciones de cuatro a dos anuales.' },
+      { id: 45, party: 'PP', category: 'Energía y Medio Ambiente', text: 'Anular el calendario de cierre de las centrales nucleares y tramitar la ampliación de su vida útil.' },
+      { id: 46, party: 'PP', category: 'Estado e Instituciones', text: 'Eliminar los pinganillos en el Congreso para debatir únicamente en castellano, manteniendo el uso de las lenguas cooficiales en el Senado.' },
+      { id: 47, party: 'PSOE', category: 'Fiscalidad y Tecnología', text: 'Abrir un debate internacional para cobrar un impuesto por cada token que utilicen las inteligencias artificiales como ChatGPT.' },
+      { id: 48, party: 'PP', category: 'Fiscalidad y Juventud', text: 'Eximir del IRPF a los jóvenes trabajadores de 18 a 35 años su primer año laboral, y aplicarles rebajas del 75%, 50% y 25% los tres años siguientes.' },
+      { id: 49, party: 'PSOE', category: 'Vivienda y Constitución', text: 'Reformar la Constitución para blindar la vivienda como derecho fundamental exigible y dedicar anualmente cerca del 1% del PIB a políticas de vivienda.' },
+      { id: 50, party: 'VOX', category: 'Educación y Ciencia', text: 'Derogar la ley educativa LOMLOE, prohibir los móviles en clase, implantar una EBAU única en toda España y garantizar la enseñanza en español.' },
+      { id: 51, party: 'VOX', category: 'Derechos y Familia', text: 'Pagar desde el Estado las cotizaciones a la Seguridad Social de quien deje de trabajar para cuidar a sus hijos para que no pierda pensión.' },
+      { id: 52, party: 'PSOE', category: 'Financiación e Instituciones', text: 'Asumir el Estado 83.000 millones de euros de deuda de las comunidades autónomas y aportarles 21.000 millones adicionales con la nueva financiación.' },
+      { id: 53, party: 'PSOE', category: 'Derechos y Sociedad', text: 'Crear la \'unión de amistad\' para que dos amigos o compañeros puedan registrarse legalmente con beneficios similares a los de una pareja.' },
+      { id: 54, party: 'PSOE', category: 'Derechos y Juventud', text: 'Dotar a cada bebé al nacer de una cuenta pública con 1.000 € invertidos que podrá utilizar al cumplir 18 años para estudiar o emprender.' },
+      { id: 55, party: 'FA', category: 'Economía y Trabajo', text: 'Fijar por ley que el salario mínimo equivalga siempre al menos al 60% del salario medio neto del país.' },
+      { id: 56, party: 'VOX', category: 'Modelo de Estado', text: 'Endurecer las penas para quienes ofendan a la bandera, el escudo, el himno o la Corona para que ninguna ofensa quede impune.' },
+      { id: 57, party: 'PP', category: 'Sanidad y Salud', text: 'Aplicar un plan urgente contra las listas de espera sanitarias incorporando al menos 4.500 médicos más en atención primaria y reduciendo las guardias.' },
+      { id: 58, party: 'PSOE', category: 'Cultura y Juventud', text: 'Crear una tarifa plana de cine de 15 € al mes para menores de 25 años con acceso ilimitado a las salas.' },
+      { id: 59, party: 'FA', category: 'Cultura y Comercio', text: 'Obligar a cobrar un gasto de envío mínimo en los libros comprados por internet para proteger a las librerías frente al envío gratuito de grandes plataformas.' },
+      { id: 60, party: 'PSOE', category: 'Tecnología y Juventud', text: 'Prohibir las redes sociales a menores de 16 años con verificación de edad obligatoria y responsabilidad penal/legal de los directivos por delitos tolerados.' },
+      { id: 61, party: 'PSOE', category: 'Economía y Pensiones', text: 'Blindar en la Constitución que las pensiones públicas suban siempre conforme al IPC para que ningún gobierno pueda congelarlas.' },
+      { id: 62, party: 'FA', category: 'Educación y Ciencia', text: 'Destinar el 7% del PIB a educación en 2030, fijar ratios máximas de 15 alumnos en Primaria y 20 en Secundaria, y prohibir las cuotas en colegios concertados.' },
+      { id: 63, party: 'VOX', category: 'Inmigración y Ayudas', text: 'Reservar el Ingreso Mínimo Vital exclusivamente para españoles e incentivar el retorno a sus países de origen a los inmigrantes que lo perciban.' },
+      { id: 64, party: 'FA', category: 'Fiscalidad y Medio Ambiente', text: 'Crear un impuesto progresivo a los viajeros frecuentes en avión (pagando más cuantos más vuelos anuales se realicen) y otro impuesto a los transportes de lujo.' },
+      { id: 65, party: 'VOX', category: 'Estado y Administración', text: 'Eliminar la obligatoriedad de la cita previa en las oficinas públicas para permitir ser atendido en el momento sin pedir turno por internet.' },
+      { id: 66, party: 'PSOE', category: 'Sanidad y Salud', text: 'Incorporar gradualmente empastes, endodoncias y arreglos dentales básicos en la sanidad pública, con una ayuda transitoria de hasta 200 € al año por persona.' },
+      { id: 67, party: 'PSOE', category: 'Estado y Democracia', text: 'Rebajar la edad mínima para votar en las elecciones de los 18 a los 16 años.' },
+      { id: 68, party: 'VOX', category: 'Vivienda y Seguridad', text: 'Desalojar a los okupas en menos de 24 horas y tipificar como delito de estafa el impago deliberado del alquiler.' },
+      { id: 69, party: 'FA', category: 'Vivienda y Alquiler', text: 'Invertir cada año el 1% del PIB para construir 1,5 millones de viviendas públicas en alquiler en 12 años con un precio máximo de 600 € al mes.' },
+      { id: 70, party: 'VOX', category: 'Modelo de Estado', text: 'Recuperar el delito de sedición, prohibir los indultos por corrupción o independentismo e ilegalizar los partidos que atenten contra la unidad de España.' },
+      { id: 71, party: 'VOX', category: 'Derechos y Ayudas', text: 'Dar prioridad nacional a los españoles en el acceso a vivienda pública, plazas de guardería, becas de comedor y transporte, ayudas y servicios sociales.' },
+      { id: 72, party: 'VOX', category: 'Economía y Autónomos', text: 'Fijar una cuota de 0 € para autónomos que ganen menos del salario mínimo, y una cuota progresiva a partir de 50 € mensuales para quienes lo superen.' },
+      { id: 73, party: 'FA', category: 'Derechos y Familia', text: 'Conceder una prestación universal de 200 € al mes por cada hijo menor de 18 años a todas las familias sin importar su nivel de renta, pagada automáticamente por Hacienda.' },
+      { id: 74, party: 'PP', category: 'Derechos y Familia', text: 'Hacer corresponsables legales a los padres si un hijo menor reincide en actos violentos como disturbios o vandalismo teniendo conocimiento de ello y sin impedirlo.' },
+      { id: 75, party: 'VOX', category: 'Energía y Medio Ambiente', text: 'Anular el calendario de cierre de las centrales nucleares y estudiar la construcción de nuevas centrales junto a las ya existentes.' },
+      { id: 76, party: 'PSOE', category: 'Vivienda y Alquiler', text: 'Crear un parque estatal de 100.000 viviendas públicas construidas o adquiridas para venderlas o alquilarlas a precio asequible.' },
+      { id: 77, party: 'FA', category: 'Sanidad y Salud', text: 'Destinar al menos el 8% del PIB a sanidad e incluir gafas y lentillas gratuitas para todas las edades, audífonos públicos y dentista para al menos la mitad de la población.' },
+      { id: 78, party: 'VOX', category: 'Energía y Fiscalidad', text: 'Reducir masivamente los impuestos de la factura eléctrica para familias y empresas y eliminar la doble imposición eléctrica.' },
+      { id: 79, party: 'FA', category: 'Vivienda y Fiscalidad', text: 'Aplicar un recargo fiscal del 200% en la compraventa de una segunda vivienda y del 1.000% al comprar una tercera vivienda.' },
+      { id: 80, party: 'PSOE', category: 'Energía y Medio Ambiente', text: 'Mantener el calendario de cierre de todas las centrales nucleares hasta 2035 y alcanzar un 81% de generación eléctrica renovable en 2030.' },
+      { id: 81, party: 'VOX', category: 'Derechos y Familia', text: 'Derogar las leyes de violencia de género actuales por considerar que criminalizan a los hombres y sustituirlas por otras leyes de protección intrafamiliar.' },
+      { id: 82, party: 'PP', category: 'Inmigración y Seguridad', text: 'Prohibir por ley las regularizaciones masivas de inmigrantes, convertir el arraigo en una excepción y evitar que el mero empadronamiento dé acceso a ayudas no urgentes.' },
+      { id: 83, party: 'FA', category: 'Defensa y OTAN', text: 'Rechazar el compromiso con la OTAN de gastar el 5% del PIB en defensa, reduciendo el gasto militar para transferirlo a Protección Civil, Sanidad y Educación.' },
+      { id: 84, party: 'PSOE', category: 'Economía y Trabajo', text: 'Bajar la jornada laboral a 37,5 horas semanales sin pérdida salarial y proyectar su reducción progresiva hasta las 35 horas.' },
+      { id: 85, party: 'FA', category: 'Economía y Pensiones', text: 'Adelantar la edad de jubilación a los 65 años (60 en oficios duros como construcción, limpieza, camareras de piso o pesca) y garantizar que ninguna pensión sea inferior al SMI.' },
+      { id: 86, party: 'VOX', category: 'Fiscalidad e Impuestos', text: 'Realizar una bajada masiva de impuestos: menos IRPF con mayores deducciones por hijo, menor IVA en productos básicos y rebaja del Impuesto de Sociedades.' },
+      { id: 87, party: 'PP', category: 'Tecnología y Juventud', text: 'Prohibir las redes sociales a menores de 14 años, exigir permiso paterno hasta los 16 y multar a las plataformas que incumplan la norma.' },
+      { id: 88, party: 'PP', category: 'Vivienda y Alquiler', text: 'Desalojar a los okupas en 48 horas por orden judicial y eximir al propietario de pagar luz, agua, gas e impuestos de la vivienda mientras dure la ocupación.' },
+      { id: 89, party: 'PP', category: 'Fiscalidad e Impuestos', text: 'Aplicar un IVA del 0% a los alimentos básicos, incluidos carne, pescado y conservas, mientras dure la crisis inflacionaria.' },
+      { id: 90, party: 'VOX', category: 'Inmigración y Seguridad', text: 'Poner en marcha un plan de retorno a sus países para los extranjeros que no aporten o vivan de las ayudas públicas.' },
+      { id: 91, party: 'VOX', category: 'Vivienda y Fiscalidad', text: 'Dejar libre de impuestos la compra de la primera vivienda para familias españolas (0% de IVA en obra nueva y 100% de bonificación del ITP en segunda mano).' },
+      { id: 92, party: 'FA', category: 'Sanidad y Salud', text: 'Prohibir fumar en terrazas y playas, implantar el empaquetado genérico del tabaco y prohibir los vapeadores desechables.' },
+      { id: 93, party: 'VOX', category: 'Seguridad y Justicia', text: 'Rebajar la edad penal a la que un menor puede ser juzgado y plantear juzgarlos como adultos en casos de homicidio o agresión sexual.' },
+      { id: 94, party: 'PP', category: 'Estado y Justicia', text: 'Derogar la Ley de Amnistía y prohibir por ley que los indultos se utilicen como moneda de cambio para lograr apoyos de investidura o formar gobierno.' },
+      { id: 95, party: 'PSOE', category: 'Sanidad y Salud', text: 'Garantizar atención psicológica gratuita en la sanidad pública con una primera cita en un plazo máximo de 30 días.' },
+      { id: 96, party: 'FA', category: 'Vivienda y Alquiler', text: 'Expropiar viviendas de grandes tenedores (empezando por quienes tengan más de 1.000 pisos, luego más de 700 y finalmente empresas con más de 50).' },
+      { id: 97, party: 'FA', category: 'Vivienda y Alquiler', text: 'Topar por ley el precio del alquiler en zonas tensionadas para que nunca supere el 25% de la renta media del barrio.' },
+      { id: 98, party: 'PSOE', category: 'Inmigración y Acogida', text: 'Ejecutar un plan de integración de inmigrantes (2026-2030) dotado con 500 millones de euros iniciales, ampliando vías legales de entrada y plazas de acogida y asilo.' },
+      { id: 99, party: 'PP', category: 'Energía y Fiscalidad', text: 'Eliminar el impuesto del 7% a la producción eléctrica para abaratar el recibo de la luz y crear una única tarifa social para hogares vulnerables.' },
+      { id: 100, party: 'VOX', category: 'Modelo de Estado', text: 'Llevar ante los tribunales a Pedro Sánchez y a su Gobierno por traición por su gestión durante la crisis migratoria de Ceuta.' }
+    ];
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, ch => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[ch]));
+    }
+
+    // --- MAIN APPLICATION LOGIC CLASS ---
+    class ElectoralTestApp {
+      constructor() {
+        this.storageKey = 'electoral_test_es_2026_state';
+        this.questions = [];
+        this.currentIndex = 0;
+        this.answers = {}; // { [propId]: 'agree' | 'disagree' | 'skip' }
+        this.quizMode = 'full';
+        this.isShuffled = true;
+        this.surveyCounted = false;
+
+        this.init();
+      }
+
+      init() {
+        this.checkSavedState();
+        this.initPWA();
+        this.initRating();
+        this.loadSurveyCount();
+      }
+
+      checkSavedState() {
+        try {
+          const saved = localStorage.getItem(this.storageKey);
+          if (saved) {
+            const data = JSON.parse(saved);
+            if (data && data.answers && Object.keys(data.answers).length > 0) {
+              const count = Object.keys(data.answers).length;
+              document.getElementById('resume-count').textContent = count;
+              document.getElementById('resume-btn').classList.remove('hidden');
+            }
+          }
+        } catch (e) {
+          console.warn('LocalStorage error:', e);
+        }
+      }
+
+      saveState() {
+        try {
+          const data = {
+            questions: this.questions,
+            currentIndex: this.currentIndex,
+            answers: this.answers,
+            quizMode: this.quizMode,
+            isShuffled: this.isShuffled,
+            surveyCounted: this.surveyCounted
+          };
+          localStorage.setItem(this.storageKey, JSON.stringify(data));
+          this.checkSavedState();
+        } catch (e) {
+          console.warn('Failed to save to localStorage:', e);
+        }
+      }
+
+      startNewTest() {
+        const modeInput = document.querySelector('input[name="quiz-mode"]:checked');
+        this.quizMode = modeInput ? modeInput.value : 'full';
+        this.isShuffled = document.getElementById('shuffle-toggle').checked;
+        this.answers = {};
+        this.currentIndex = 0;
+        this.surveyCounted = false;
+
+        let selectedProps = [...RAW_PROPOSALS];
+
+        if (this.quizMode === 'quick') {
+          // Select 5 random proposals per party (20 total)
+          const byParty = { PP: [], PSOE: [], VOX: [], FA: [] };
+          RAW_PROPOSALS.forEach(p => byParty[p.party].push(p));
+          
+          let quickList = [];
+          Object.keys(byParty).forEach(partyCode => {
+            const shuffledParty = [...byParty[partyCode]].sort(() => 0.5 - Math.random());
+            quickList.push(...shuffledParty.slice(0, 5));
+          });
+          selectedProps = quickList;
+        }
+
+        if (this.isShuffled) {
+          selectedProps.sort(() => 0.5 - Math.random());
+        }
+
+        this.questions = selectedProps;
+        this.saveState();
+        this.showScreen('quiz');
+        this.renderQuestion();
+      }
+
+      resumeTest() {
+        try {
+          const saved = localStorage.getItem(this.storageKey);
+          if (!saved) return this.startNewTest();
+          const data = JSON.parse(saved);
+          this.questions = data.questions || [...RAW_PROPOSALS];
+          this.answers = data.answers || {};
+          this.currentIndex = data.currentIndex || 0;
+          this.quizMode = data.quizMode || 'full';
+          this.isShuffled = data.isShuffled !== undefined ? data.isShuffled : true;
+          this.surveyCounted = !!data.surveyCounted;
+
+          // If completed, go to results directly
+          if (this.currentIndex >= this.questions.length) {
+            this.showResults();
+          } else {
+            this.showScreen('quiz');
+            this.renderQuestion();
+          }
+        } catch (e) {
+          this.startNewTest();
+        }
+      }
+
+      showScreen(screenName) {
+        document.getElementById('screen-welcome').classList.add('hidden');
+        document.getElementById('screen-quiz').classList.add('hidden');
+        document.getElementById('screen-results').classList.add('hidden');
+
+        const topResetBtn = document.getElementById('reset-top-btn');
+
+        if (screenName === 'welcome') {
+          document.getElementById('screen-welcome').classList.remove('hidden');
+          topResetBtn.classList.add('hidden');
+        } else if (screenName === 'quiz') {
+          document.getElementById('screen-quiz').classList.remove('hidden');
+          topResetBtn.classList.remove('hidden');
+        } else if (screenName === 'results') {
+          document.getElementById('screen-results').classList.remove('hidden');
+          topResetBtn.classList.remove('hidden');
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      renderQuestion() {
+        if (this.currentIndex >= this.questions.length) {
+          this.showResults();
+          return;
+        }
+
+        const prop = this.questions[this.currentIndex];
+        const total = this.questions.length;
+        const currentNum = this.currentIndex + 1;
+        const percent = Math.round((currentNum / total) * 100);
+
+        document.getElementById('quiz-counter-text').textContent = `Propuesta ${currentNum} de ${total}`;
+        document.getElementById('quiz-category-badge').textContent = prop.category || 'General';
+        document.getElementById('quiz-percent-text').textContent = `${percent}%`;
+        document.getElementById('quiz-progress-fill').style.width = `${percent}%`;
+
+        document.getElementById('quiz-prop-id').textContent = String(prop.id).padStart(3, '0');
+        document.getElementById('quiz-question-text').textContent = prop.text;
+
+        const prevBtn = document.getElementById('prev-btn');
+        prevBtn.disabled = this.currentIndex === 0;
+
+        this.updateAnswerSelection(prop);
+      }
+
+      updateAnswerSelection(prop) {
+        const selected = this.answers[prop.id];
+        ['agree', 'disagree'].forEach(choice => {
+          const btn = document.getElementById(`btn-${choice}`);
+          if (!btn) return;
+          const isSelected = selected === choice;
+          btn.style.boxShadow = isSelected ? '0 0 0 4px rgba(255, 255, 255, 0.75)' : '';
+          btn.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+        });
+      }
+
+      answer(choice) {
+        // choice: 'agree', 'disagree', 'skip'
+        if (this.currentIndex >= this.questions.length) return;
+        const currentProp = this.questions[this.currentIndex];
+        this.answers[currentProp.id] = choice;
+
+        this.currentIndex++;
+        this.saveState();
+
+        if (this.currentIndex < this.questions.length) {
+          this.renderQuestion();
+        } else {
+          this.showResults();
+        }
+      }
+
+      previousQuestion() {
+        if (this.currentIndex > 0) {
+          this.currentIndex--;
+          this.saveState();
+          this.renderQuestion();
+        }
+      }
+
+      computeResults() {
+        const scores = {};
+        Object.keys(PARTIES).forEach(code => {
+          scores[code] = { agree: 0, disagree: 0, skip: 0 };
+        });
+
+        this.questions.forEach(q => {
+          const ans = this.answers[q.id];
+          if (!ans || !scores[q.party] || !(ans in scores[q.party])) return;
+          scores[q.party][ans]++;
+        });
+
+        const partyResults = Object.keys(PARTIES).map(code => {
+          const party = PARTIES[code];
+          const score = scores[code];
+          // 'skip' is neutral: it is excluded from the denominator.
+          const evaluated = score.agree + score.disagree;
+          const matchPercent = evaluated > 0 ? Math.round((score.agree / evaluated) * 100) : 0;
+          return {
+            ...party,
+            agreeCount: score.agree,
+            disagreeCount: score.disagree,
+            skipCount: score.skip,
+            totalEvaluated: evaluated,
+            matchPercent
+          };
+        });
+
+        partyResults.sort((a, b) => b.matchPercent - a.matchPercent || b.agreeCount - a.agreeCount);
+        return partyResults;
+      }
+
+      showResults() {
+        this.showScreen('results');
+        this.submitSurveyCompletion();
+
+        const partyResults = this.computeResults();
+        const winner = partyResults[0];
+
+        // Render Winner Banner
+        const winnerBanner = document.getElementById('results-winner-banner');
+        winnerBanner.className = `p-6 rounded-2xl border-2 flex flex-col md:flex-row items-center justify-between gap-4 shadow-xl text-white bg-slate-900 ${winner.borderClass}`;
+        const winnerDetail = winner.totalEvaluated > 0
+          ? `Coincides con ${winner.agreeCount} de sus ${winner.totalEvaluated} propuestas evaluadas.`
+          : 'No evaluaste ninguna propuesta de este partido.';
+        winnerBanner.innerHTML = `
+          <div class="flex items-center space-x-4">
+            <img src="${escapeHtml(winner.logo)}" alt="Logo de ${escapeHtml(winner.name)}" width="64" height="64" class="w-16 h-16 rounded-2xl object-cover shadow-lg ring-1 ring-white/10">
+            <div class="text-left">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Máxima Coincidencia</span>
+              <h3 class="text-2xl font-black text-white">${escapeHtml(winner.name)}</h3>
+              <p class="text-xs text-slate-300">${winnerDetail}</p>
+            </div>
+          </div>
+          <div class="text-center md:text-right">
+            <div class="text-4xl font-extrabold ${winner.textClass}">${winner.matchPercent}%</div>
+            <span class="text-xs text-slate-400 font-semibold">Afinidad ideológica</span>
+          </div>
+        `;
+
+        // Render Party Score Cards
+        const scoresContainer = document.getElementById('party-scores-container');
+        scoresContainer.innerHTML = partyResults.map(p => `
+          <div class="bg-slate-900/90 rounded-xl p-4 border border-slate-800 space-y-3">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center space-x-2.5">
+                <img src="${escapeHtml(p.logo)}" alt="Logo de ${escapeHtml(p.name)}" width="32" height="32" loading="lazy" class="w-8 h-8 rounded-lg object-cover">
+                <span class="font-bold text-sm text-white">${escapeHtml(p.name)}</span>
+              </div>
+              <span class="font-black text-base" style="color: ${p.color}">${p.matchPercent}%</span>
+            </div>
+
+            <div class="w-full h-2.5 bg-slate-800 rounded-full overflow-hidden">
+              <div class="h-full rounded-full transition-all duration-500" style="width: ${p.matchPercent}%; background-color: ${p.color}"></div>
+            </div>
+
+            <div class="flex items-center justify-between text-xs text-slate-400 font-medium pt-1">
+              <span>A favor: <strong class="text-white">${p.agreeCount}</strong> · En contra: <strong class="text-white">${p.disagreeCount}</strong></span>
+              <span>Saltadas: <strong class="text-white">${p.skipCount}</strong></span>
+            </div>
+          </div>
+        `).join('');
+
+        // Render detailed proposals list
+        this.renderDetailedList();
+      }
+
+      renderDetailedList() {
+        const answerFilter = document.getElementById('filter-answer').value;
+        const partyFilter = document.getElementById('filter-party').value;
+        const container = document.getElementById('detailed-proposals-list');
+
+        let filtered = this.questions.filter(q => {
+          const ans = this.answers[q.id] || 'unanswered';
+          if (answerFilter !== 'all' && ans !== answerFilter) return false;
+          if (partyFilter !== 'all' && q.party !== partyFilter) return false;
+          return true;
+        });
+
+        if (filtered.length === 0) {
+          container.innerHTML = `
+            <div class="p-8 text-center text-slate-500 text-xs">
+              No hay propuestas que coincidan con los filtros seleccionados.
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = filtered.map(q => {
+          const ans = this.answers[q.id];
+          const party = PARTIES[q.party];
+          
+          let badgeAns = '';
+          if (ans === 'agree') {
+            badgeAns = `<span class="bg-emerald-950/80 border border-emerald-800/80 text-emerald-300 px-2.5 py-1 rounded-md text-xs font-semibold">✓ De acuerdo</span>`;
+          } else if (ans === 'disagree') {
+            badgeAns = `<span class="bg-rose-950/80 border border-rose-800/80 text-rose-300 px-2.5 py-1 rounded-md text-xs font-semibold">✕ En desacuerdo</span>`;
+          } else {
+            badgeAns = `<span class="bg-slate-800 text-slate-400 px-2.5 py-1 rounded-md text-xs font-semibold">- Saltada</span>`;
+          }
+
+          return `
+            <div class="bg-slate-900/80 rounded-xl p-4 border border-slate-800 space-y-2 text-left">
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center space-x-2">
+                  <img src="${escapeHtml(party.logo)}" alt="${escapeHtml(party.name)}" width="28" height="28" loading="lazy" class="w-7 h-7 rounded-md object-cover">
+                  <span class="text-xs text-slate-400 font-mono">Propuesta #${String(q.id).padStart(3, '0')}</span>
+                  <span class="text-[11px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded font-medium">${escapeHtml(q.category || '')}</span>
+                </div>
+                <div>${badgeAns}</div>
+              </div>
+              <p class="text-sm font-medium text-slate-200 leading-relaxed">${escapeHtml(q.text)}</p>
+            </div>
+          `;
+        }).join('');
+      }
+
+      shareResults() {
+        const partyResults = this.computeResults();
+        const byCode = Object.fromEntries(partyResults.map(p => [p.code, p]));
+        const icons = { PP: '🔹', PSOE: '🔴', VOX: '🟢', FA: '🟡' };
+
+        const lines = Object.keys(PARTIES).map(code => {
+          const r = byCode[code];
+          const detail = r.totalEvaluated > 0 ? `${r.agreeCount}/${r.totalEvaluated}` : 'sin evaluar';
+          return `${icons[code]} ${r.name}: ${r.matchPercent}% (${detail})`;
+        }).join('\n');
+
+        const text = `🗳️ Mi resultado en el Test Electoral España 2026 (${this.questions.length} propuestas ciegas):
+${lines}
+
+Realiza el test sin conocer el partido de cada propuesta: ${window.location.href}`;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(() => {
+            this.showToast('¡Resultado copiado al portapapeles!');
+          }).catch(() => this.fallbackCopy(text));
+        } else {
+          this.fallbackCopy(text);
+        }
+      }
+
+      fallbackCopy(text) {
+        const area = document.createElement('textarea');
+        area.value = text;
+        document.body.appendChild(area);
+        area.select();
+        try {
+          document.execCommand('copy');
+          this.showToast('¡Resultado copiado!');
+        } catch (e) {
+          this.showToast('No se pudo copiar automáticamente.');
+        }
+        document.body.removeChild(area);
+      }
+
+      resetTest() {
+        if (Object.keys(this.answers).length > 0) {
+          this.answers = {};
+          this.currentIndex = 0;
+          this.surveyCounted = false;
+          localStorage.removeItem(this.storageKey);
+          this.checkSavedState();
+          this.showToast('Test reiniciado.');
+          this.showScreen('welcome');
+        } else {
+          this.showScreen('welcome');
+        }
+      }
+
+      showToast(msg) {
+        const container = document.getElementById('toast-container');
+        const toast = document.createElement('div');
+        toast.className = 'bg-indigo-600 text-white font-medium text-xs py-2.5 px-4 rounded-xl shadow-xl transition-all duration-300 transform translate-y-2 opacity-0 pointer-events-auto flex items-center space-x-2';
+        toast.innerHTML = `<span>✨</span><span>${escapeHtml(msg)}</span>`;
+
+        container.appendChild(toast);
+        requestAnimationFrame(() => {
+          toast.classList.remove('translate-y-2', 'opacity-0');
+        });
+
+        setTimeout(() => {
+          toast.classList.add('opacity-0', 'translate-y-2');
+          setTimeout(() => toast.remove(), 300);
+        }, 3000);
+      }
+
+      initRating() {
+        this.ratingStarsContainer = document.getElementById('rating-stars');
+        this.ratingStatus = document.getElementById('rating-status');
+        this.ratingStarButtons = [];
+
+        if (!this.ratingStarsContainer || !this.ratingStatus) return;
+
+        let savedRating = 0;
+        try {
+          savedRating = Number(localStorage.getItem('electoral_test_es_2026_rating')) || 0;
+        } catch (e) {
+          savedRating = 0;
+        }
+        this.selectedRating = savedRating >= 1 && savedRating <= 5 ? savedRating : 0;
+
+        this.ratingStarButtons = Array.from(this.ratingStarsContainer.querySelectorAll('[data-rating]'));
+
+        this.ratingStarsContainer.addEventListener('mouseover', (e) => {
+          const button = e.target.closest('[data-rating]');
+          if (button) this.renderRatingStars(Number(button.dataset.rating), true);
+        });
+        this.ratingStarsContainer.addEventListener('mouseleave', () => {
+          this.renderRatingStars(this.selectedRating);
+        });
+        this.ratingStarsContainer.addEventListener('focusin', (e) => {
+          const button = e.target.closest('[data-rating]');
+          if (button) this.renderRatingStars(Number(button.dataset.rating), true);
+        });
+        this.ratingStarsContainer.addEventListener('focusout', (e) => {
+          if (!this.ratingStarsContainer.contains(e.relatedTarget)) {
+            this.renderRatingStars(this.selectedRating);
+          }
+        });
+        this.ratingStarsContainer.addEventListener('click', (e) => {
+          const button = e.target.closest('[data-rating]');
+          if (button) this.submitRating(Number(button.dataset.rating));
+        });
+
+        this.renderRatingStars(this.selectedRating);
+        this.loadRatingStats();
+      }
+
+      renderRatingStars(value, preview = false) {
+        this.ratingStarButtons.forEach(button => {
+          const buttonValue = Number(button.dataset.rating);
+          const active = buttonValue <= value;
+          button.style.color = active ? '#fbbf24' : '';
+          button.setAttribute('aria-pressed', !preview && this.selectedRating === buttonValue ? 'true' : 'false');
+        });
+      }
+
+      getClientId() {
+        try {
+          let id = localStorage.getItem('electoral_test_es_2026_rating_id');
+          if (id) return id;
+          id = (window.crypto && window.crypto.randomUUID)
+            ? window.crypto.randomUUID()
+            : `c${Date.now().toString(36)}${Math.random().toString(36).slice(2)}`;
+          localStorage.setItem('electoral_test_es_2026_rating_id', id);
+          return id;
+        } catch (e) {
+          return `c${Date.now().toString(36)}${Math.random().toString(36).slice(2)}`;
+        }
+      }
+
+      updateRatingStatus(data) {
+        if (!this.ratingStatus) return;
+        const count = Number(data.count) || 0;
+        if (count === 0) {
+          this.ratingStatus.textContent = 'Todavía no hay valoraciones. ¡Sé el primero!';
+          return;
+        }
+        const average = (Number(data.average) || 0).toFixed(1).replace('.', ',');
+        const label = count === 1 ? '1 valoración' : `${count} valoraciones`;
+        const mine = this.selectedRating ? `Tu valoración: ${this.selectedRating} ★ · ` : '';
+        this.ratingStatus.textContent = `${mine}Media: ${average} ★ · ${label}`;
+      }
+
+      async loadRatingStats() {
+        try {
+          const response = await fetch('./api/rating.php', { headers: { Accept: 'application/json' } });
+          const data = await response.json();
+          if (!response.ok || !data.ok) throw new Error('bad_response');
+          this.updateRatingStatus(data);
+        } catch (e) {
+          if (this.ratingStatus) this.ratingStatus.textContent = 'Estadísticas no disponibles.';
+        }
+      }
+
+      async submitRating(value) {
+        if (!this.ratingStatus || value < 1 || value > 5) return;
+        const clientId = this.getClientId();
+        this.ratingStatus.textContent = 'Enviando valoración…';
+
+        try {
+          const response = await fetch('./api/rating.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify({ rating: value, clientId })
+          });
+          const data = await response.json();
+          if (!response.ok || !data.ok) throw new Error('bad_response');
+
+          this.selectedRating = value;
+          try {
+            localStorage.setItem('electoral_test_es_2026_rating', String(value));
+          } catch (e) {
+            // localStorage may be unavailable; the rating is already stored server-side
+          }
+          this.renderRatingStars(value);
+          this.updateRatingStatus(data);
+          this.showToast(`¡Gracias! Has valorado con ${value} ★`);
+        } catch (e) {
+          this.renderRatingStars(this.selectedRating);
+          this.ratingStatus.textContent = 'No se pudo guardar la valoración. Inténtalo de nuevo.';
+          this.showToast('No se pudo guardar la valoración.');
+        }
+      }
+
+      updateSurveyCountDisplay(count) {
+        const value = Number(count);
+        if (!Number.isFinite(value) || value < 0) return;
+        const formatted = Math.trunc(value).toLocaleString('es-ES');
+        document.querySelectorAll('[data-survey-count]').forEach(el => {
+          el.textContent = formatted;
+        });
+      }
+
+      async loadSurveyCount() {
+        try {
+          const response = await fetch('./api/survey.php', { headers: { Accept: 'application/json' } });
+          const data = await response.json();
+          if (!response.ok || !data.ok) throw new Error('bad_response');
+          this.updateSurveyCountDisplay(data.count);
+        } catch (e) {
+          // The counter is non-essential; leave the placeholder if unavailable.
+        }
+      }
+
+      async submitSurveyCompletion() {
+        if (this.surveyCounted) return;
+        this.surveyCounted = true;
+        this.saveState();
+
+        try {
+          const response = await fetch('./api/survey.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify({ clientId: this.getClientId() })
+          });
+          const data = await response.json();
+          if (!response.ok || !data.ok) throw new Error('bad_response');
+          this.updateSurveyCountDisplay(data.count);
+        } catch (e) {
+          // Showing results must not depend on the global counter.
+        }
+      }
+
+      initPWA() {
+        // Handle PWA Before Install Prompt
+        let deferredPrompt;
+        const installBtn = document.getElementById('pwa-install-btn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+          e.preventDefault();
+          deferredPrompt = e;
+          installBtn.classList.remove('hidden');
+        });
+
+        installBtn.addEventListener('click', () => {
+          if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then(() => {
+              deferredPrompt = null;
+              installBtn.classList.add('hidden');
+            });
+          }
+        });
+
+        // Register the real service worker (blob: URLs cannot be SW scripts)
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW error:', err));
+        }
+      }
+    }
+
+    // Initialize App on DOM Load
+    let app;
+    window.addEventListener('DOMContentLoaded', () => {
+      app = new ElectoralTestApp();
+    });
+  </script>
+</body>
+</html>
