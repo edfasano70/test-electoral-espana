@@ -44,11 +44,10 @@ No hay build, gestor de paquetes ni tests automatizados.
 .
 ├── index.html                 # UI, estilos, lógica y dataset de propuestas
 ├── manifest.json              # Manifest PWA
-├── sw.js                      # Service worker (caché v10)
-├── elecciones.png             # Logo/icono fuente (512×512)
-├── icon-192.png
-├── icon-512.png
-├── icon-maskable-512.png
+├── sw.js                      # Service worker (caché v11)
+├── elecciones.png             # Logo/icono fuente y icono 512×512
+├── icon-29n-192.png
+├── icon-29n-maskable-512.png
 ├── pp.png
 ├── psoe.png
 ├── vox.png

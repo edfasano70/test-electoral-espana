@@ -2,7 +2,7 @@
 
 ## What this is
 
-Static PWA plus small PHP endpoints: **no build step or package manager, and no automated tests**. Git remote: `EdFasano70/test-electoral-espana` (branch `main`). `index.html` holds all markup, the inline Tailwind config, CSS, JS, and the 100-proposal dataset. `api/rating.php` stores 1–5 star app ratings in `/var/lib/test-electoral-espana/ratings.json` and returns aggregate stats. `api/survey.php` keeps the global number of completed tests in `/var/lib/test-electoral-espana/surveys.json`. Supporting files are `manifest.json`, `sw.js`, `elecciones.png` (source app logo, also used in the header and welcome screen), `icon-192.png`, `icon-512.png`, `icon-maskable-512.png`, the party logos `pp.png`, `psoe.png`, `vox.png`, `frenteamplio.png`, and `assets/video-thumbnail.jpg` (credits thumbnail from the source YouTube video).
+Static PWA plus small PHP endpoints: **no build step or package manager, and no automated tests**. Git remote: `EdFasano70/test-electoral-espana` (branch `main`). `index.html` holds all markup, the inline Tailwind config, CSS, JS, and the 100-proposal dataset. `api/rating.php` stores 1–5 star app ratings in `/var/lib/test-electoral-espana/ratings.json` and returns aggregate stats. `api/survey.php` keeps the global number of completed tests in `/var/lib/test-electoral-espana/surveys.json`. Supporting files are `manifest.json`, `sw.js`, `elecciones.png` (source app logo/512 icon, also used in the header and welcome screen), `icon-29n-192.png`, `icon-29n-maskable-512.png`, the party logos `pp.png`, `psoe.png`, `vox.png`, `frenteamplio.png`, and `assets/video-thumbnail.jpg` (credits thumbnail from the source YouTube video).
 
 ## Deploy
 
@@ -40,6 +40,7 @@ Static PWA plus small PHP endpoints: **no build step or package manager, and no 
 ## Styling / PWA gotchas
 
 - Tailwind comes from the CDN with an inline `tailwind.config` defining colors `pp`/`psoe`/`vox`/`fa`; classes like `bg-pp`, `text-pp-light`, `border-fa` only resolve because of that config. Add theme tokens there, not via a build.
-- `manifest.json` and `sw.js` are real same-origin files — required, because service workers and manifests cannot be registered from `blob:` URLs. Bump `CACHE_NAME` in `sw.js` (currently `electoral-test-v10`) when cached assets or caching behavior change, and update the `APP_SHELL` list when adding files. Keep `/api/` out of the SW cache (dynamic JSON must not be cached).
+- `manifest.json` and `sw.js` are real same-origin files — required, because service workers and manifests cannot be registered from `blob:` URLs. Bump `CACHE_NAME` in `sw.js` (currently `electoral-test-v11`) when cached assets or caching behavior change, and update the `APP_SHELL` list when adding files. Keep `/api/` out of the SW cache (dynamic JSON must not be cached).
+- Android fixes the launcher icon when a PWA is installed; changing the manifest/artwork does not update an existing installation. When the icon changes, use new icon filenames (currently `icon-29n-*` / `elecciones.png`) and reinstall the PWA to verify.
 - Interpolated dataset fields are escaped with `escapeHtml()` before `innerHTML`; keep doing that for any dynamic/user-derived text.
 - UI copy is Spanish.
