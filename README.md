@@ -18,6 +18,26 @@ Aplicación web tipo PWA para descubrir tu afinidad política mediante un **test
 - PWA instalable con icono propio e identidad visual 29N, y funcionamiento offline mediante service worker.
 - Valoración global de la app (1–5 estrellas) y contador global de encuestas realizadas.
 
+## Capturas
+
+> Capturas con datos de la demo.
+
+### Portada
+
+![Portada de Test Electoral España 2026](assets/screenshots/portada.png)
+
+### Test ciego
+
+![Pantalla del test ciego con una propuesta y los botones de acuerdo y desacuerdo](assets/screenshots/test.png)
+
+### Resultados
+
+![Resultados con la afinidad por partido y el porcentaje de coincidencia](assets/screenshots/resultados.png)
+
+### Desglose detallado
+
+![Desglose de propuestas con el partido y la respuesta de cada una](assets/screenshots/desglose.png)
+
 ## Cómo se calcula la afinidad
 
 Para cada partido:
@@ -52,7 +72,13 @@ No hay build, gestor de paquetes ni tests automatizados.
 ├── psoe.png
 ├── vox.png
 ├── frenteamplio.png
-├── assets/video-thumbnail.jpg
+├── assets/
+│   ├── video-thumbnail.jpg
+│   └── screenshots/
+│       ├── portada.png
+│       ├── test.png
+│       ├── resultados.png
+│       └── desglose.png
 ├── api/
 │   ├── rating.php             # GET estadísticas / POST valoración
 │   └── survey.php             # GET contador / POST incremento

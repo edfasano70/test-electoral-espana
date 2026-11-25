@@ -16,6 +16,7 @@ Static PWA plus small PHP endpoints: **no build step or package manager, and no 
 - Serve over HTTP so the service worker works: `python3 -m http.server`, then open `http://localhost:8000/`. Opening `index.html` via `file://` renders the app but `sw.js` will not register.
 - `python3 -m http.server` does not execute PHP: the rating widget shows «Estadísticas no disponibles» and the survey counter keeps its «—» placeholder. PHP is not installed in this workspace, so test both endpoints on the server (or with `php -S` if available).
 - No automated checks — verify in a browser. Answering and navigation use the on-screen buttons only (no keyboard shortcuts).
+- README captures live in `assets/screenshots/` (portada, test, resultados, desglose).
 
 ## Code map (app logic in `index.html`)
 
